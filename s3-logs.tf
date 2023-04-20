@@ -1,3 +1,5 @@
+# TODO: Raise tfsec issue - unable to conditionally set 'log-delivery-write' acl resource to ignore access logging
+#tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "logs" {
   count = local.create_logs_bucket ? 1 : 0
 
@@ -21,6 +23,31 @@ resource "aws_s3_bucket_acl" "logs" {
   acl    = "log-delivery-write"
 }
 
+resource "aws_s3_bucket_acl" "cloudfront_logs" {
+  count = local.enable_cloudfront_static_site_logs ? 1 : 0
+
+  bucket = aws_s3_bucket.logs[0].id
+  access_control_policy {
+    grant {
+      grantee {
+        id   = data.aws_canonical_user_id.current.id
+        type = "CanonicalUser"
+      }
+      permission = "FULL_CONTROL"
+    }
+    grant {
+      grantee {
+        id   = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
+        type = "CanonicalUser"
+      }
+      permission = "WRITE"
+    }
+    owner {
+      id = data.aws_canonical_user_id.current.id
+    }
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "logs" {
   count = local.create_logs_bucket ? 1 : 0
 
@@ -31,6 +58,7 @@ resource "aws_s3_bucket_public_access_block" "logs" {
   restrict_public_buckets = true
 }
 
+#tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
   count = local.create_logs_bucket ? 1 : 0
 

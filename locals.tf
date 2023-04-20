@@ -1,6 +1,7 @@
 locals {
-  project_name = var.project_name
-  account_id   = data.aws_caller_identity.current.account_id
+  project_name   = var.project_name
+  account_id     = data.aws_caller_identity.current.account_id
+  site_host_name = var.site_host_name
 
   s3_bucket_policy_statement_enforce_tls_path    = "${path.module}/policies/s3-bucket-policy-statements/enforce-tls.json.tpl"
   s3_bucket_policy_statement_log_delivery_access = "${path.module}/policies/s3-bucket-policy-statements/log-delivery-access.json.tpl"
@@ -26,8 +27,25 @@ locals {
   )
   s3_static_site_force_destroy = var.s3_static_site_force_destroy
 
-  enable_s3_access_logs = var.enable_s3_access_logs
-  create_logs_bucket    = local.enable_s3_access_logs
+  enable_cloudfront                                  = var.enable_cloudfront
+  cloudfront_static_site_s3_origin_id                = "${local.project_name}-static-site-s3"
+  cloudfront_static_site_s3_cache_policy_id          = local.enable_cloudfront && local.cloudfront_static_site_default_cache_behaviour["cache_policy_id"] == null ? aws_cloudfront_cache_policy.static_site[0].id : local.cloudfront_static_site_default_cache_behaviour["cache_policy_id"]
+  cloudfront_static_site_s3_origin_request_policy_id = local.enable_cloudfront && local.cloudfront_static_site_default_cache_behaviour["origin_request_policy_id"] == null ? aws_cloudfront_origin_request_policy.static_site[0].id : local.cloudfront_static_site_default_cache_behaviour["origin_request_policy_id"]
+  cloudfront_static_site_aliases                     = [local.site_host_name]
+  cloudfront_static_site_web_acl_id                  = var.cloudfront_static_site_web_acl_id
+  cloudfront_static_site_tls_certificate_arn         = var.cloudfront_static_site_tls_certificate_arn
+  cloudfront_static_site_custom_error_responses      = var.cloudfront_static_site_custom_error_responses
+  cloudfront_static_site_default_root_object         = var.cloudfront_static_site_default_root_object
+  cloudfront_static_site_price_class                 = var.cloudfront_static_site_price_class
+  cloudfront_static_site_restrictions                = var.cloudfront_static_site_restrictions
+  cloudfront_static_site_is_ipv6_enabled             = var.cloudfront_static_site_is_ipv6_enabled
+  cloudfront_static_site_http_version                = var.cloudfront_static_site_http_version
+  cloudfront_static_site_default_cache_behaviour     = var.cloudfront_static_site_default_cache_behaviour
+
+
+  enable_s3_access_logs              = var.enable_s3_access_logs
+  enable_cloudfront_static_site_logs = var.enable_cloudfront_static_site_logs
+  create_logs_bucket                 = local.enable_s3_access_logs || local.enable_cloudfront_static_site_logs
   logs_bucket_enforce_tls_statement = local.create_logs_bucket ? templatefile(
     local.s3_bucket_policy_statement_enforce_tls_path,
     {
