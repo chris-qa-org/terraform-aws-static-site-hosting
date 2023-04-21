@@ -1,7 +1,8 @@
 locals {
-  project_name   = var.project_name
-  account_id     = data.aws_caller_identity.current.account_id
-  site_host_name = var.site_host_name
+  project_name    = var.project_name
+  account_id      = data.aws_caller_identity.current.account_id
+  site_host_name  = var.site_host_name
+  route53_zone_id = var.route53_zone_id
 
   s3_bucket_policy_statement_enforce_tls_path    = "${path.module}/policies/s3-bucket-policy-statements/enforce-tls.json.tpl"
   s3_bucket_policy_statement_log_delivery_access = "${path.module}/policies/s3-bucket-policy-statements/log-delivery-access.json.tpl"

@@ -9,6 +9,12 @@ variable "site_host_name" {
   default     = ""
 }
 
+variable "route53_zone_id" {
+  description = "Route53 zone id. If provided, the certificate validation records and site records will be created in that zone"
+  type        = string
+  default     = ""
+}
+
 variable "static_site_s3_acl" {
   description = "Static Site S3 ACL"
   type        = string

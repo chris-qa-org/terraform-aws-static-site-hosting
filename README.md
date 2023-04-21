@@ -83,10 +83,13 @@ module "static_site_hosting" {
 | Name | Type |
 |------|------|
 | [aws_acm_certificate.cloudfront_static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate) | resource |
+| [aws_acm_certificate_validation.cloudfront_static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate_validation) | resource |
 | [aws_cloudfront_cache_policy.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_cache_policy) | resource |
 | [aws_cloudfront_distribution.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution) | resource |
 | [aws_cloudfront_origin_access_control.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control) | resource |
 | [aws_cloudfront_origin_request_policy.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_request_policy) | resource |
+| [aws_route53_record.cloudfront_static_site_tls_certificate_dns_validation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
+| [aws_route53_record.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_s3_bucket.logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_acl.cloudfront_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_acl) | resource |
@@ -104,6 +107,7 @@ module "static_site_hosting" {
 | [aws_s3_bucket_website_configuration.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_canonical_user_id.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/canonical_user_id) | data source |
+| [aws_route53_zone.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
 
@@ -122,6 +126,7 @@ module "static_site_hosting" {
 | <a name="input_enable_cloudfront_static_site_logs"></a> [enable\_cloudfront\_static\_site\_logs](#input\_enable\_cloudfront\_static\_site\_logs) | Enable CloudFront Staci Site logging to the logs bucket | `bool` | `true` | no |
 | <a name="input_enable_s3_access_logs"></a> [enable\_s3\_access\_logs](#input\_enable\_s3\_access\_logs) | Enable S3 access logs | `bool` | `true` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project Name | `string` | n/a | yes |
+| <a name="input_route53_zone_id"></a> [route53\_zone\_id](#input\_route53\_zone\_id) | Route53 zone id. If provided, the certificate validation records and site records will be created in that zone | `string` | `""` | no |
 | <a name="input_s3_logs_force_destroy"></a> [s3\_logs\_force\_destroy](#input\_s3\_logs\_force\_destroy) | Force destroy Logs S3 bucket | `bool` | `false` | no |
 | <a name="input_s3_static_site_force_destroy"></a> [s3\_static\_site\_force\_destroy](#input\_s3\_static\_site\_force\_destroy) | Force destroy Static Site S3 bucket | `bool` | `false` | no |
 | <a name="input_site_host_name"></a> [site\_host\_name](#input\_site\_host\_name) | Site Host Name. This will be used for Certificate generation and CloudFront aliases | `string` | `""` | no |
