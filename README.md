@@ -69,14 +69,14 @@ module "static_site_hosting" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4.4 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.63.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.64.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.63.0 |
-| <a name="provider_aws.useast1"></a> [aws.useast1](#provider\_aws.useast1) | 4.63.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.64.0 |
+| <a name="provider_aws.useast1"></a> [aws.useast1](#provider\_aws.useast1) | 4.64.0 |
 
 ## Resources
 
@@ -87,6 +87,8 @@ module "static_site_hosting" {
 | [aws_cloudfront_distribution.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution) | resource |
 | [aws_cloudfront_origin_access_control.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control) | resource |
 | [aws_cloudfront_origin_request_policy.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_request_policy) | resource |
+| [aws_route53_record.cloudfront_static_site_tls_certificate_dns_validation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
+| [aws_route53_record.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_s3_bucket.logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_acl.cloudfront_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_acl) | resource |
