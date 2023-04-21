@@ -71,7 +71,7 @@ resource "aws_cloudfront_distribution" "static_site" {
   }
 
   origin {
-    domain_name              = aws_s3_bucket.static_site.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket_website_configuration.static_site.website_endpoint
     origin_id                = local.cloudfront_static_site_s3_origin_id
     origin_access_control_id = local.static_site_s3_enable_encryption ? aws_cloudfront_origin_access_control.static_site[0].id : null
   }
