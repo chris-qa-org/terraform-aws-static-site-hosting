@@ -2,7 +2,7 @@
   "Principal": {
     "Service": "cloudfront.amazonaws.com"
   },
-  "Action": "s3:GetObject"
+  "Action": "s3:GetObject",
   "Effect": "Allow",
   "Resource": "${bucket_arn}/*",
   "Condition": {
