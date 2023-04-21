@@ -6,6 +6,7 @@ locals {
 
   s3_bucket_policy_statement_enforce_tls_path    = "${path.module}/policies/s3-bucket-policy-statements/enforce-tls.json.tpl"
   s3_bucket_policy_statement_log_delivery_access = "${path.module}/policies/s3-bucket-policy-statements/log-delivery-access.json.tpl"
+  s3_bucket_policy_statement_cloudfront_read     = "${path.module}/policies/s3-bucket-policy-statements/cloudfront-read.json.tpl"
   s3_bucket_policy_path                          = "${path.module}/policies/s3-bucket-policy.json.tpl"
 
   static_site_s3_acl               = var.static_site_s3_acl
@@ -16,12 +17,20 @@ locals {
       bucket_arn = aws_s3_bucket.static_site.arn
     }
   )
+  static_site_bucket_cloudfront_read_statement = templatefile(
+    local.s3_bucket_policy_statement_cloudfront_read,
+    {
+      bucket_arn     = aws_s3_bucket.static_site.arn,
+      cloudfront_arn = aws_cloudfront_distribution.static_site[0].arn
+    }
+  )
   static_site_bucket_policy = templatefile(
     local.s3_bucket_policy_path,
     {
       statement = <<EOT
       [
-      ${local.static_site_bucket_enforce_tls_statement}
+      ${local.static_site_bucket_enforce_tls_statement},
+      ${local.static_site_bucket_cloudfront_read_statement}
       ]
       EOT
     }
@@ -42,7 +51,6 @@ locals {
   cloudfront_static_site_is_ipv6_enabled             = var.cloudfront_static_site_is_ipv6_enabled
   cloudfront_static_site_http_version                = var.cloudfront_static_site_http_version
   cloudfront_static_site_default_cache_behaviour     = var.cloudfront_static_site_default_cache_behaviour
-
 
   enable_s3_access_logs              = var.enable_s3_access_logs
   enable_cloudfront_static_site_logs = var.enable_cloudfront_static_site_logs
