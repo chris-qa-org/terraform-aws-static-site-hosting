@@ -70,7 +70,7 @@ variable "cloudfront_static_site_default_cache_behaviour" {
     cached_methods  = optional(list(string), ["GET", "HEAD"])
     cache_policy_id = optional(string, null)
     compress        = optional(bool, true)
-    default_ttl     = optional(number, 86400)
+    default_ttl     = optional(number, 0)
     lambda_function_associations = optional(map(object({
       event_type   = string
       lambda_arn   = string
