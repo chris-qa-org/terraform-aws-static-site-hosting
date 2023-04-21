@@ -16,6 +16,16 @@ resource "aws_s3_bucket_versioning" "logs" {
   }
 }
 
+resource "aws_s3_bucket_ownership_controls" "logs" {
+  count = local.create_logs_bucket ? 1 : 0
+
+  bucket = aws_s3_bucket.logs[0].id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 resource "aws_s3_bucket_acl" "logs" {
   count = local.enable_s3_access_logs ? 1 : 0
 
