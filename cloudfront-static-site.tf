@@ -144,4 +144,8 @@ resource "aws_cloudfront_distribution" "static_site" {
       prefix          = "cloudfront/static_site"
     }
   }
+
+  depends_on = [
+    aws_acm_certificate_validation.cloudfront_static_site
+  ]
 }
