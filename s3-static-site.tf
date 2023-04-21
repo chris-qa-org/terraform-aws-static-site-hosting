@@ -56,3 +56,13 @@ resource "aws_s3_bucket_policy" "static_site" {
   bucket = aws_s3_bucket.static_site.id
   policy = local.static_site_bucket_policy
 }
+
+resource "aws_s3_object" "static_site_index" {
+  bucket  = aws_s3_bucket.static_site.id
+  key     = "index.html"
+  content = local.project_name
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
