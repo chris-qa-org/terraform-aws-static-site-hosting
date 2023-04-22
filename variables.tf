@@ -9,6 +9,12 @@ variable "site_host_name" {
   default     = ""
 }
 
+variable "site_redirect_to_www" {
+  description = "Conditionally redirect to www.<site_host_name>"
+  type        = bool
+  default     = false
+}
+
 variable "route53_zone_id" {
   description = "Route53 zone id. If provided, the certificate validation records and site records will be created in that zone"
   type        = string
