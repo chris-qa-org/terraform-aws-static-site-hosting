@@ -2,7 +2,7 @@ resource "aws_cloudfront_origin_access_control" "static_site" {
   count = local.static_site_s3_enable_encryption && local.enable_cloudfront ? 1 : 0
 
   name                              = "${local.project_name}-static-site-s3"
-  description                       = "${local.project_name} Staic Site S3"
+  description                       = "${local.project_name} Static Site S3"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -12,7 +12,7 @@ resource "aws_cloudfront_cache_policy" "static_site" {
   count = local.enable_cloudfront && local.cloudfront_static_site_default_cache_behaviour["cache_policy_id"] == null ? 1 : 0
 
   name        = "${local.project_name}-static-site-s3-default"
-  comment     = "${local.project_name} Staic Site S3 default"
+  comment     = "${local.project_name} Static Site S3 default"
   default_ttl = 86400
   max_ttl     = 31536000
   min_ttl     = 1
@@ -34,7 +34,7 @@ resource "aws_cloudfront_origin_request_policy" "static_site" {
   count = local.enable_cloudfront && local.cloudfront_static_site_default_cache_behaviour["origin_request_policy_id"] == null ? 1 : 0
 
   name    = "${local.project_name}-static-site-s3-default"
-  comment = "${local.project_name} Staic Site S3 default"
+  comment = "${local.project_name} Static Site S3 default"
 
   cookies_config {
     cookie_behavior = "none"
