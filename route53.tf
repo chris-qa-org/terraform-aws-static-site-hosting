@@ -18,12 +18,26 @@ resource "aws_route53_record" "static_site" {
   count = local.route53_zone_id != "" ? 1 : 0
 
   zone_id = data.aws_route53_zone.static_site[0].zone_id
-  name    = local.site_host_name
+  name    = local.site_redirect_to_www ? "www.${local.site_host_name}" : local.site_host_name
   type    = "A"
 
   alias {
     name                   = aws_cloudfront_distribution.static_site[0].domain_name
     zone_id                = aws_cloudfront_distribution.static_site[0].hosted_zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "static_site_www_redirect" {
+  count = local.route53_zone_id != "" && local.site_redirect_to_www ? 1 : 0
+
+  zone_id = data.aws_route53_zone.static_site[0].zone_id
+  name    = local.site_host_name
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.site_www_redirect[0].domain_name
+    zone_id                = aws_cloudfront_distribution.site_www_redirect[0].hosted_zone_id
     evaluate_target_health = true
   }
 }

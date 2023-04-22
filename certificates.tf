@@ -4,6 +4,9 @@ resource "aws_acm_certificate" "cloudfront_static_site" {
   count = local.cloudfront_static_site_tls_certificate_arn == "" ? 1 : 0
 
   domain_name = local.site_host_name
+  subject_alternative_names = local.site_redirect_to_www ? [
+    "www.${local.site_host_name}"
+  ] : []
 
   validation_method = "DNS"
 
