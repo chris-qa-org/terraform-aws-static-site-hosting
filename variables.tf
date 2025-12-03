@@ -15,6 +15,17 @@ variable "site_redirect_to_www" {
   default     = false
 }
 
+variable "site_redirects" {
+  description = "Site redirects"
+  type = list(object({
+    from_hostname_pattern = string
+    from_path_pattern     = string
+    to_hostname           = string
+    to_path               = string
+  }))
+  default = []
+}
+
 variable "route53_zone_id" {
   description = "Route53 zone id. If provided, the certificate validation records and site records will be created in that zone"
   type        = string
