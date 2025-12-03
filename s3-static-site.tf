@@ -26,11 +26,6 @@ resource "aws_s3_bucket_ownership_controls" "static_site" {
   }
 }
 
-resource "aws_s3_bucket_acl" "static_site" {
-  bucket = aws_s3_bucket.static_site.id
-  acl    = local.static_site_s3_acl
-}
-
 resource "aws_s3_bucket_public_access_block" "static_site" {
   bucket                  = aws_s3_bucket.static_site.id
   block_public_acls       = local.static_site_s3_acl == "public" ? false : true

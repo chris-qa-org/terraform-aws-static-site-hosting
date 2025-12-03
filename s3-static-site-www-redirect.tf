@@ -30,13 +30,6 @@ resource "aws_s3_bucket_ownership_controls" "site_redirect_to_www" {
   }
 }
 
-resource "aws_s3_bucket_acl" "site_redirect_to_www" {
-  count = local.site_redirect_to_www ? 1 : 0
-
-  bucket = aws_s3_bucket.site_redirect_to_www[0].id
-  acl    = local.static_site_s3_acl
-}
-
 resource "aws_s3_bucket_public_access_block" "site_redirect_to_www" {
   count = local.site_redirect_to_www ? 1 : 0
 
