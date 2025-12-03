@@ -84,6 +84,14 @@ resource "aws_cloudfront_distribution" "static_site" {
     compress         = local.cloudfront_static_site_default_cache_behaviour["compress"]
     default_ttl      = local.cloudfront_static_site_default_cache_behaviour["default_ttl"]
 
+    dynamic "function_association" {
+      for_each = length(local.site_redirects) > 0 ? [1] : []
+      content {
+        event_type   = "viewer-request"
+        function_arn = aws_cloudfront_function.viewer_request[0].arn
+      }
+    }
+
     dynamic "lambda_function_association" {
       for_each = local.cloudfront_static_site_default_cache_behaviour["lambda_function_associations"]
 

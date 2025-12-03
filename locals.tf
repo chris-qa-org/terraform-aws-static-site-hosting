@@ -3,6 +3,7 @@ locals {
   account_id           = data.aws_caller_identity.current.account_id
   site_host_name       = var.site_host_name
   site_redirect_to_www = var.site_redirect_to_www
+  site_redirects       = var.site_redirects
   route53_zone_id      = var.route53_zone_id
 
   s3_bucket_policy_statement_enforce_tls_path    = "${path.module}/policies/s3-bucket-policy-statements/enforce-tls.json.tpl"

@@ -87,6 +87,7 @@ module "static_site_hosting" {
 | [aws_cloudfront_cache_policy.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_cache_policy) | resource |
 | [aws_cloudfront_distribution.site_www_redirect](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution) | resource |
 | [aws_cloudfront_distribution.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution) | resource |
+| [aws_cloudfront_function.viewer_request](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_function) | resource |
 | [aws_cloudfront_origin_access_control.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control) | resource |
 | [aws_cloudfront_origin_request_policy.static_site](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_request_policy) | resource |
 | [aws_route53_record.cloudfront_static_site_tls_certificate_dns_validation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
@@ -143,6 +144,7 @@ module "static_site_hosting" {
 | <a name="input_s3_static_site_force_destroy"></a> [s3\_static\_site\_force\_destroy](#input\_s3\_static\_site\_force\_destroy) | Force destroy Static Site S3 bucket | `bool` | `false` | no |
 | <a name="input_site_host_name"></a> [site\_host\_name](#input\_site\_host\_name) | Site Host Name. This will be used for Certificate generation and CloudFront aliases | `string` | `""` | no |
 | <a name="input_site_redirect_to_www"></a> [site\_redirect\_to\_www](#input\_site\_redirect\_to\_www) | Conditionally redirect to www.<site\_host\_name> | `bool` | `false` | no |
+| <a name="input_site_redirects"></a> [site\_redirects](#input\_site\_redirects) | Site redirects | <pre>list(object({<br/>    from_hostname_pattern = string<br/>    from_path_pattern     = string<br/>    to_hostname           = string<br/>    to_path               = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_static_site_s3_acl"></a> [static\_site\_s3\_acl](#input\_static\_site\_s3\_acl) | Static Site S3 ACL | `string` | `"private"` | no |
 | <a name="input_static_site_s3_enable_encryption"></a> [static\_site\_s3\_enable\_encryption](#input\_static\_site\_s3\_enable\_encryption) | Static Site S3 Enable Encyption | `bool` | `true` | no |
 
